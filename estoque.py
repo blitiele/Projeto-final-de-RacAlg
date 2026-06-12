@@ -1,11 +1,5 @@
-# ============================================================
-#  Módulo de Estoque — Sistema de Revenda de Roupas
-# ============================================================
-
 estoque = {}  # { codigo: { nome, categoria, tamanho, preco, quantidade, vendidos } }
 
-
-# ── Cadastrar produto ────────────────────────────────────────
 def cadastrar_produto(codigo, nome, categoria, tamanho, preco, quantidade):
     if codigo in estoque:
         return f"Erro: produto com código '{codigo}' já existe. Use atualizar_quantidade() para alterar o estoque."
@@ -21,8 +15,6 @@ def cadastrar_produto(codigo, nome, categoria, tamanho, preco, quantidade):
     }
     return f"Produto '{nome}' (cód. {codigo}) cadastrado com sucesso!"
 
-
-# ── Consultar estoque ────────────────────────────────────────
 def consultar_estoque(codigo=None):
     if not estoque:
         return "Estoque vazio."
@@ -39,8 +31,6 @@ def consultar_estoque(codigo=None):
         resultado.append(item)
     return resultado
 
-
-# ── Atualizar quantidade ─────────────────────────────────────
 def atualizar_quantidade(codigo, nova_quantidade):
     if codigo not in estoque:
         return f"Erro: produto com código '{codigo}' não encontrado."
@@ -53,8 +43,6 @@ def atualizar_quantidade(codigo, nova_quantidade):
         f"{anterior} → {nova_quantidade}."
     )
 
-
-# ── Registrar venda ──────────────────────────────────────────
 def registrar_venda(codigo, quantidade_vendida):
     if codigo not in estoque:
         return f"Erro: produto com código '{codigo}' não encontrado."
@@ -72,8 +60,6 @@ def registrar_venda(codigo, quantidade_vendida):
         f"Estoque restante: {estoque[codigo]['quantidade']} unidade(s)."
     )
 
-
-# ── Relatório de vendidos ────────────────────────────────────
 def relatorio_vendidos():
     if not estoque:
         return "Estoque vazio."
@@ -92,16 +78,12 @@ def relatorio_vendidos():
     relatorio.sort(key=lambda x: x["vendidos"], reverse=True)
     return relatorio
 
-
-# ── Remover produto ──────────────────────────────────────────
 def remover_produto(codigo):
     if codigo not in estoque:
         return f"Erro: produto com código '{codigo}' não encontrado."
     nome = estoque.pop(codigo)["nome"]
     return f"Produto '{nome}' (cód. {codigo}) removido do estoque."
 
-
-# ── Exibir tabela no terminal ────────────────────────────────
 def exibir_estoque():
     dados = consultar_estoque()
     if isinstance(dados, str):
@@ -119,8 +101,6 @@ def exibir_estoque():
         )
     print(f"{'─'*70}\n")
 
-
-# ── Helpers do menu ──────────────────────────────────────────
 def _input_float(mensagem):
     while True:
         try:
@@ -138,12 +118,9 @@ def _input_int(mensagem):
 def _pausar():
     input("\nPressione Enter para continuar...")
 
-
-# ── Menu interativo ──────────────────────────────────────────
 def menu():
     """Inicia o menu interativo para a autônoma gerenciar o estoque."""
 
-    # Produtos fictícios da revendedora carregados na inicialização
     _carregar_revendedora()
 
     opcoes = {
@@ -167,7 +144,7 @@ def menu():
         escolha = input("Escolha uma opção: ").strip()
 
         if escolha == "0":
-            print("\nAté mais! 👋\n")
+            print("\nAté mais!\n")
             break
         elif escolha in opcoes:
             opcoes[escolha][1]()
@@ -240,8 +217,6 @@ def _menu_relatorio():
         print(f"{'─'*60}")
     _pausar()
 
-
-# ── Produtos fictícios da revendedora ────────────────────────
 def _carregar_revendedora():
     """Carrega o catálogo inicial da revendedora fictícia."""
     produtos = [
@@ -260,7 +235,5 @@ def _carregar_revendedora():
         cadastrar_produto(*args)
     print("✔️ Catálogo da revendedora carregado com 10 produtos.")
 
-
-# ── Ponto de entrada ─────────────────────────────────────────
 if _name_ == "_main_":
     menu()
