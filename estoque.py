@@ -233,7 +233,7 @@ def _carregar_revendedora():
     ]
     for args in produtos:
         cadastrar_produto(*args)
-    print("✔️ Catálogo da revendedora carregado com 10 produtos.")
+    print(" Catálogo da revendedora carregado com 10 produtos.")
 
 if _name_ == "_main_":
     menu()
